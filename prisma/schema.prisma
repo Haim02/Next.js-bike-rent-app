@@ -1,0 +1,110 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+// datasource db {
+//   provider = "postgresql"
+//   // url      = "postgresql://postgres:951753@db.vtiqneuzzlnzxoenypsn.supabase.co:5432/postgres"
+//   url      = env("DATABASE_URL")
+// }
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL") // pooler (לריצה רגילה)
+  directUrl = env("DIRECT_URL") // direct connection למיגרציות
+}
+
+// datasource db {
+//   provider  = "postgresql"
+//   // url       = "postgres://...:951753@aws-0-region.pooler.supabase.com:5432/postgres?sslmode=require&pgbouncer=true"
+//   // url       = "postgresql://postgres:951753@db.vtiqneuzzlnzxoenypsn.supabase.co:5432/postgres?pgbouncer=true&sslmode=require"
+
+//   url       = env("DATABASE_URL")
+//   // directUrl = env("DIRECT_URL")
+// }
+
+model User {
+  id             String    @id @default(uuid())
+  email          String    @unique
+  name           String    @unique
+  phone          String
+  password       String
+  role           Role      @default(BASIC)
+  createdAt      DateTime  @default(now()) @db.Date
+  updateAt       DateTime  @updatedAt @db.Date
+  // Product        Product[]
+  Product        Product?
+  sendMessages   Message[] @relation("sendMessages")
+  receivMessages Message[] @relation("receivMessages")
+
+  @@index([email])
+}
+
+model Product {
+  id            String          @id @default(uuid())
+  type          Type
+  title         String
+  description   String
+  pricePerDay   Int
+  pricePerHour  Int
+  city          String
+  street        String
+  houseNumber   Int
+  images        String[]
+  model         String
+  hasHelmet     Boolean
+  batteryWatts  Int
+  author        User            @relation(fields: [authorId], references: [id])
+  authorId      String          @unique
+  createdAt     DateTime        @default(now()) @db.Date
+  updateAt      DateTime        @updatedAt @db.Date
+  Message       Message[]
+  AvailableSlot AvailableSlot[]
+}
+
+model Message {
+  id         String   @id @default(uuid())
+  date       String
+  hours      String[]
+  content    String
+  fromUser   User     @relation("sendMessages", fields: [fromUserId], references: [id])
+  fromUserId String
+  toUser     User     @relation("receivMessages", fields: [toUserId], references: [id])
+  toUserId   String
+  product    Product  @relation(fields: [productId], references: [id])
+  productId  String
+  status     Status   @default(PENDING)
+  createdAt  DateTime @default(now()) @db.Date
+  updateAt   DateTime @updatedAt @db.Date
+}
+
+model AvailableSlot {
+  id        String   @id @default(uuid())
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  date      DateTime
+  hour      String // כמו "10:20"
+}
+
+enum Role {
+  BASIC
+  ADMIN
+}
+
+enum Status {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum Type {
+  BICYCLE
+  SCOOTER
+}
