@@ -51,7 +51,7 @@ export const PATCH = async (req: Request, { params }: { params: Promise<{ id: st
 
 
 
-export const DELETE = async (req: Request, { params }: { params: { id: string } }) => {
+export const DELETE = async (req: Request) => {
 
   try {
     const session = await getServerSession(authOptions);
