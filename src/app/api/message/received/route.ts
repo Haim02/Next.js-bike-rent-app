@@ -40,14 +40,15 @@ type Session = {
 
 
 export const GET = async (req: Request) => {
+  let session: Session;
     try {
-        const session = await getServerSession(authOptions) as Session;
-           if (!session || !session.user?.id ) {
+         session = await getServerSession(authOptions) as Session;
+           if (!session || !session.user.id ) {
              return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
            }
 
            const messages = await db.message.findMany({
-            where: { toUserId: session.user?.id },
+            where: { toUserId: session.user.id },
             include: {
                 product: true,
               },
