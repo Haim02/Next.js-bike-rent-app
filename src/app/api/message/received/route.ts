@@ -4,39 +4,45 @@ import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { getServerSession } from "next-auth"
 import { NextResponse } from "next/server"
-import dayjs from 'dayjs'; // לטיפול ואימות תאריכים
+import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-// הגדרת טיפוס עבור גוף הבקשה
 interface CreateMessageRequestBody {
   productId: string;
   fromUserId: string;
   toUserId: string;
-  date: string;    // תאריך בפורמט YYYY-MM-DD
-  hours: string[]; // כעת זהו מערך של מחרוזות
+  date: string;
+  hours: string[];
   content: string;
 }
 
-// הגדרת טיפוס עבור תגובת הצלחה
 type SuccessResponse = {
   message: string;
-  bookingId: string; // רק ID אחד כי זו רשומה אחת
+  bookingId: string;
 };
 
-// הגדרת טיפוס עבור תגובת שגיאה
 type ErrorResponse = {
   message: string;
+};
+
+type Session = {
+  user: {
+    name: string,
+    email: string,
+    image?: undefined,
+    id: string
+  }
 };
 
 
 
 export const GET = async (req: Request) => {
     try {
-        const session = await getServerSession(authOptions);
-           if (!session || !session.user?.id) {
+        const session = await getServerSession(authOptions) as Session;
+           if (!session || !session.user?.id ) {
              return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
            }
 
