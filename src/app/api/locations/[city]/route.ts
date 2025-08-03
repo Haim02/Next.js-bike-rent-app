@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 
-type Params = Promise<{ city: string | number | boolean }>;
 
 export async function GET(req: Request, { params }: { params: Promise<{ city: string | any }> } ) {
   const { city } = await params;
