@@ -2,10 +2,11 @@ import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 import dayjs from 'dayjs';
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: Request, { params }: { params: Promise<{ id: string | any }> }) {
   const url = new URL(req.url);
   const date = url.searchParams.get('date');
-  const productId = params.id;
+  const { id } = await params;
+  const productId = id;
 
   if (!productId) {
     return NextResponse.json({ message: 'Product ID is required.' }, { status: 400 });

@@ -8,7 +8,7 @@ type AvailableHoursResponse = string[];
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string | any }> }
 ) {
   const url = new URL(req.url);
   const dateString = url.searchParams.get('date');
