@@ -4,14 +4,6 @@ import Sidebar from '@/components/sidebar/Sidebar';
 import { Metadata } from 'next';
 import React, { useState } from 'react';
 
-export const metadata: Metadata = {
-  title: "פרופיל",
-  description: "אזור אישי",
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
 
 const ProfileLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [activeTab, setActiveTab] = useState('profile');

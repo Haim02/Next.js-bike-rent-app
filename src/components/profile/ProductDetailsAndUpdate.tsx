@@ -33,7 +33,7 @@ const ProductDetailsAndUpdate: React.FC = () => {
     const fetchProduct = async () => {
       startTransition(async () => {
         try {
-          const res = await fetch("http://localhost:3000/api/profile/product", {
+          const res = await fetch("/api/profile/product", {
             method: "GET",
           });
           const data = await res.json();
@@ -65,9 +65,11 @@ const ProductDetailsAndUpdate: React.FC = () => {
     }
   };
 
-  if (pending) return <Loading />;
   if (status !== "authenticated") return <Loading />;
-  if (!product) return <Loading />;
+  if (!product && pending) return <Loading />;
+  if (!product)
+    return <p className="text-center mt-10 text-gray-500">אין מוצרים להצגה.</p>;
+
 
   return (
     <section className="w-full max-w-4xl mx-auto py-10 px-6">

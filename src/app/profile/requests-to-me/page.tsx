@@ -42,7 +42,7 @@ export default function MyProductRequestsPage() {
         const data = await res.json();
         setMessages(data);
       } catch (err) {
-        console.error("שגיאה בשליפת בקשות שהתקבלו", err);
+        throw new Error("שגיאה בשליפת בקשות שהתקבלו");
       }
     });
   }, []);
@@ -67,7 +67,7 @@ export default function MyProductRequestsPage() {
         prev.map((m) => (m.id === id ? { ...m, status: newStatus } : m))
       );
     } catch (err) {
-      console.error("שגיאה בעדכון סטטוס:", err);
+      throw new Error("שגיאה בעדכון סטטוס:");
     }
   };
 

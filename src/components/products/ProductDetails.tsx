@@ -36,7 +36,7 @@ const ProductDetails = (productId: any) => {
   useEffect(() => {
     const getProduct = async () => {
       startTransition(async () => {
-        const res = await fetch(`http://localhost:3000/api/product/${id}`);
+        const res = await fetch(`/api/product/${id}`);
         if (res.status === 404) {
           return notFound();
         }

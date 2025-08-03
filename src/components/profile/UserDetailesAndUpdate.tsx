@@ -18,7 +18,7 @@ const UserDetailesAndUpdate: React.FC = () => {
       startTransition(async () => {
         try {
           const res = await fetch(
-            `http://localhost:3000/api/profile/${session.user.id}`,
+            `/api/profile/${session.user.id}`,
             {
               method: "GET",
             }

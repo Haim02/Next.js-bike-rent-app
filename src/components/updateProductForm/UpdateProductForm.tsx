@@ -105,7 +105,7 @@ const UpdateProductForm = ({
     body.batteryWatts = parseInt(body.batteryWatts);
 
     startTransition(async () => {
-      await fetch("http://localhost:3000/api/profile/product", {
+      await fetch("/api/profile/product", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

@@ -94,7 +94,7 @@ const UploadItemForm: React.FC = () => {
       return errors;
     } else {
       startTransition(async () => {
-        const res = await fetch("http://localhost:3000/api/product", {
+        const res = await fetch("/api/product", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

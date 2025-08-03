@@ -1,6 +1,6 @@
-"use client";
+// "use client";
 
-import React, { Suspense, useState } from "react";
+import React, { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "מוצרים",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 const ProfileLayout: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [activeTab, setActiveTab] = useState("profile");
+  // const [activeTab, setActiveTab] = useState("profile");
 
   return (
     <main className="flex flex-col w-full md:px-12 mt-24 gap-3">

@@ -1,88 +1,90 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect, useTransition } from 'react';
-import Image from 'next/image';
-import bike from '../../../../public/images/bike.png';
-import Loading from '@/components/loading/Loading';
-import Link from 'next/link';
+import React, { useState, useEffect, useTransition } from "react";
+import Image from "next/image";
+import bike from "../../../../public/images/bike.png";
+import Loading from "@/components/loading/Loading";
+import Link from "next/link";
 
 interface Message {
   id: number;
-  status: 'PENDING' | 'APPROVED' | 'REJECTED';
+  status: "PENDING" | "APPROVED" | "REJECTED";
   date: string;
   hours: string[];
-  content:    String
-  fromUserId: String
-  toUserId:   String
-  productId:  String
-  createdAt: Date
+  content: String;
+  fromUserId: String;
+  toUserId: String;
+  productId: String;
+  createdAt: Date;
 }
 
-
 const statusColors = {
-  'PENDING': 'bg-gray-100 text-gray-800',
-  'APPROVED': 'bg-green-100 text-green-800',
-  'REJECTED': 'bg-red-100 text-red-800',
+  PENDING: "bg-gray-100 text-gray-800",
+  APPROVED: "bg-green-100 text-green-800",
+  REJECTED: "bg-red-100 text-red-800",
 };
 
 const statusMessage = (status: string) => {
-  if(status === 'PENDING') {
-    return 'ממתין'
+  if (status === "PENDING") {
+    return "ממתין";
   } else {
-    if (status === 'APPROVED') {
-      return 'אושר'
+    if (status === "APPROVED") {
+      return "אושר";
     } else {
-      if (status === 'REJECTED') {
-        return 'נדחה'
+      if (status === "REJECTED") {
+        return "נדחה";
       }
     }
   }
-}
+};
 
 const productType = (type: string) => {
   if (type === "BICYCLE") {
     return "אופניים";
   } else {
-    return 'קורקינט'
+    return "קורקינט";
   }
 };
 
 export default function MyRequestsPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [expandedId, setExpandedId] = useState<number | null>(null);
-  const [filterStatus, setFilterStatus] = useState('');
-  const [sortOrder, setSortOrder] = useState('');
-    const [pending, startTransition] = useTransition();
+  const [filterStatus, setFilterStatus] = useState("");
+  const [sortOrder, setSortOrder] = useState("");
+  const [pending, startTransition] = useTransition();
 
   useEffect(() => {
     const getMessages = () => {
       startTransition(async () => {
-        await fetch('/api/message')
-          .then(res => res.json())
+        await fetch("/api/message")
+          .then((res) => res.json())
           .then((data: Message[]) => {
             setMessages(data);
           })
           .catch((err) => {
-            throw new Error(err)
+            throw new Error("שגיעה בטעינת ההודעות");
           });
-      })
-    }
-    getMessages()
+      });
+    };
+    getMessages();
   }, []);
 
   const toggleRow = (id: number) => {
     setExpandedId(expandedId === id ? null : id);
   };
 
-  const filtered = messages.filter(r => filterStatus ? r.status === filterStatus : true);
+  const filtered = messages.filter((r) =>
+    filterStatus ? r.status === filterStatus : true
+  );
   const sorted = filtered.sort((a, b) => {
-    if (sortOrder === 'date-desc') return b.date.localeCompare(a.date);
-    if (sortOrder === 'date-asc') return a.date.localeCompare(b.date);
+    if (sortOrder === "date-desc") return b.date.localeCompare(a.date);
+    if (sortOrder === "date-asc") return a.date.localeCompare(b.date);
     return 0;
   });
 
-  if (pending) return <Loading />
-  if (messages.length === 0) return <p className="text-center mt-10 text-gray-500">אין בקשות להצגה.</p>;
+  if (pending) return <Loading />;
+  if (messages.length === 0)
+    return <p className="text-center mt-10 text-gray-500">אין בקשות להצגה.</p>;
 
   return (
     <section className="max-w-5xl mx-auto py-10 px-6 mt-24">
@@ -130,7 +132,7 @@ export default function MyRequestsPage() {
               >
                 <td className="p-3 text-sm">{productType(req.product.type)}</td>
                 <td className="p-3 text-sm"> {statusMessage(req.status)}</td>
-                <td className="p-3 text-sm">{req.createdAt}</td>
+                <td className="p-3 text-sm">{req.date}</td>
               </tr>
               {expandedId === req.id && (
                 <tr className="bg-gray-50">
