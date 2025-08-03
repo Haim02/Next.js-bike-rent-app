@@ -2,8 +2,8 @@
 import { db } from "@/lib/db"
 import { NextResponse } from "next/server"
 
-export const GET = async (req: Request,{ params }: { params: { id: string } }) => {
-    const { id } = await params;
+export const GET = async (req: Request,{ params }: { params: Promise<{ id: string | any }> }) => {
+  const { id } = await params;
 
     if (!id) {
       return NextResponse.json({ error: 'חסר מזהה מוצר' }, { status: 400 });
