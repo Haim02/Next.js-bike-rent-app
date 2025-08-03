@@ -5,7 +5,7 @@ import { NextResponse } from "next/server"
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
-export const GET = async (req: Request,{ params }: { params: { id: string } }) => {
+export const GET = async (req: Request, { params }: { params: Promise<{ id: string | any }> }) => {
     try {
       const session = await getServerSession(authOptions);
       if (!session || !session.user?.id) {
@@ -27,7 +27,7 @@ export const GET = async (req: Request,{ params }: { params: { id: string } }) =
 
 
 
-export const PATCH = async (req: Request, { params }: { params: { id: string } }) => {
+export const PATCH = async (req: Request, { params }: { params: Promise<{ id: string | any }> }) => {
 
   try {
     const session = await getServerSession(authOptions);
@@ -51,12 +51,7 @@ export const PATCH = async (req: Request, { params }: { params: { id: string } }
 
 
 
-export const DELETE = async (req: Request,{ params }: { params: { id: string } }) => {
-  // const { id } = params;
-
-  // if (!id) {
-  //   return NextResponse.json({ error: 'חסר מזהה מוצר' }, { status: 400 });
-  // }
+export const DELETE = async (req: Request, { params }: { params: { id: string } }) => {
 
   try {
     const session = await getServerSession(authOptions);

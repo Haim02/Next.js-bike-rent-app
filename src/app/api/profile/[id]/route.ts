@@ -5,8 +5,8 @@ import { NextResponse } from "next/server"
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
-export const GET = async (req: Request, { params }: { params: { id: string } }) => {
-        const { id } =await params;
+export const GET = async (req: Request, { params }: { params: Promise<{ id: string | any }> }) => {
+        const { id } = await params;
 
         if (!id) {
           return NextResponse.json({ error: 'חסר מזהה משתמש' }, { status: 400 });
@@ -29,11 +29,10 @@ export const GET = async (req: Request, { params }: { params: { id: string } }) 
 
 
 
-export const PATCH = async (req: Request, { params }: { params: { id: string } }) => {
+export const PATCH = async (req: Request, { params }: { params: Promise<{ id: string | any }> }) => {
+  const { id } = await params;
 
   try {
-      const { id } = await params;
-
     if (!id) {
       return NextResponse.json({ error: 'חסר מזהה מוצר' }, { status: 400 });
     }
