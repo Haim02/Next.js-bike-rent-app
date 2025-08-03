@@ -23,9 +23,9 @@ export const GET = async (req: Request,{ params }: { params: Promise<{ id: strin
         }
 }
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }
+export async function PATCH(req: Request, { params }: { params: Promise<{ id: string | any }> }
   ) {
-    const { id } = params;
+    const { id } = await params;
 
     if (!id) {
       return NextResponse.json({ error: 'חסר מזהה מוצר' }, { status: 400 });
@@ -47,14 +47,13 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
             model,
             hasHelmet,
             batteryWatts,
-          updatedAt: new Date(), // אם אתה שומר תאריך עדכון
+          updatedAt: new Date(),
         },
       });
 
       return NextResponse.json(updatedProduct);
     } catch (error: any) {
       if (error.code === 'P2025') {
-        // Prisma: Record not found
         return NextResponse.json({ error: 'מוצר לא נמצא' }, { status: 404 });
       }
 
@@ -62,8 +61,8 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
     }
   }
 
-  export async function DELETE(req: Request, { params }: { params: { id: string } }) {
-    const { id } = params;
+  export async function DELETE(req: Request, { params }: { params: Promise<{ id: string | any }> }) {
+    const { id } = await params;
 
     if (!id) {
       return NextResponse.json({ error: 'חסר מזהה מוצר' }, { status: 400 });
