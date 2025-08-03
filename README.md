@@ -21,4 +21,7 @@ A modern full-stack web application for renting electric bikes and scooters. Use
    git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
    cd YOUR_REPO
 
+   npm install
+
+
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
