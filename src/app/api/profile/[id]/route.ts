@@ -5,6 +5,15 @@ import { NextResponse } from "next/server"
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
+type Session = {
+  user: {
+    name: string,
+    email: string,
+    image?: undefined,
+    id: string
+  }
+};
+
 export const GET = async (req: Request, { params }: { params: Promise<{ id: string | any }> }) => {
         const { id } = await params;
 
@@ -38,8 +47,8 @@ export const PATCH = async (req: Request, { params }: { params: Promise<{ id: st
     }
 
 
-    const session = await getServerSession(authOptions);
-    if (id !== session.user?.id) {
+    const session = await getServerSession(authOptions) as Session;
+    if (id !== session.user.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 

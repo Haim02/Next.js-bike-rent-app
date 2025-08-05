@@ -28,6 +28,15 @@ type ErrorResponse = {
   message: string;
 };
 
+type Session = {
+  user: {
+    name: string,
+    email: string,
+    image?: undefined,
+    id: string
+  }
+};
+
 
 export async function POST(req: Request) {
     let body: CreateMessageRequestBody;
@@ -40,8 +49,8 @@ export async function POST(req: Request) {
 
     const { productId, toUserId, date, hours, content } = body;
 
-    const session = await getServerSession(authOptions);
-    if (!session || !session.user?.id) {
+    const session = await getServerSession(authOptions) as Session ;
+    if (!session || !session.user.id) {
       console.log("Unauthorized attempt to POST /api/messages: No session or user ID.");
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -135,13 +144,13 @@ export async function POST(req: Request) {
 
 export const GET = async (req: Request) => {
     try {
-        const session = await getServerSession(authOptions);
-           if (!session || !session.user?.id) {
+        const session = await getServerSession(authOptions) as Session;
+           if (!session || !session.user.id) {
              return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
            }
 
            const messages = await db.message.findMany({
-            where: { fromUserId: session.user?.id },
+            where: { fromUserId: session.user.id },
             include: {
                 product: true,
               },

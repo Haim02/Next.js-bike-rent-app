@@ -5,11 +5,19 @@ import { NextResponse } from "next/server"
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
+type Session = {
+  user: {
+    name: string,
+    email: string,
+    image?: undefined,
+    id: string
+  }
+};
+
 export const GET = async (req: Request, { params }: { params: Promise<{ id: string | any }> }) => {
     try {
-      const session = await getServerSession(authOptions);
-      console.log('sess', session)
-      if (!session || !session.user?.id) {
+      const session = await getServerSession(authOptions) as Session;
+      if (!session || !session.user.id) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
       }
 
@@ -27,12 +35,11 @@ export const GET = async (req: Request, { params }: { params: Promise<{ id: stri
 }
 
 
-
 export const PATCH = async (req: Request, { params }: { params: Promise<{ id: string | any }> }) => {
 
   try {
-    const session = await getServerSession(authOptions);
-    if (!session || !session.user?.id) {
+    const session = await getServerSession(authOptions) as Session;
+    if (!session || !session.user.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -45,7 +52,6 @@ export const PATCH = async (req: Request, { params }: { params: Promise<{ id: st
 
     return NextResponse.json(updatedProduct);
   } catch (err) {
-    console.error(err);
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
