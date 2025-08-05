@@ -10,7 +10,8 @@ export async function POST() {
   if (session) {
      const cookieStore = await cookies();
         cookieStore.delete("session");
-    return NextResponse.redirect(new URL('/', process.env.NEXTAUTH_URL), {
+        cookieStore.delete("next-auth.session-token");
+    return NextResponse.redirect(new URL('/', '/'), {
       status: 302,
       headers: {
         'Set-Cookie': 'next-auth.session-token=; Max-Age=0; Path=/;',

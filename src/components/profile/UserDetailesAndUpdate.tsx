@@ -57,7 +57,7 @@ const UserDetailesAndUpdate: React.FC = () => {
     body.updateAt = new Date();
 
     startTransition(async () => {
-      await fetch(`http://localhost:3000/api/profile/${session.user.id}`, {
+      await fetch(`/api/profile/${session.user.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

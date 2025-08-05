@@ -57,7 +57,7 @@ const ProductDetailsAndUpdate: React.FC = () => {
   const handleDelete = async () => {
     if (confirm("האם אתה בטוח שברצונך למחוק את המוצר?")) {
       startTransition(async () => {
-        const res = await fetch("http://localhost:3000/api/profile/product", {
+        const res = await fetch("/api/profile/product", {
           method: "DELETE",
         });
         if (res.ok) {

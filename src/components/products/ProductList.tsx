@@ -66,7 +66,10 @@ const ProductList = ({ filter, sort }: Props) => {
 
   if (pending) return <Loading/>
   if (!products.length)
-    return <p className="text-center mt-10">לא נמצאו מוצרים</p>;
+    return <p className="text-center mt-10">לא נמצאו מוצרים</p>
+
+  if (!products)
+    return <p className="text-center mt-10">לא נמצאו מוצרים</p>
 
   return (
     <>

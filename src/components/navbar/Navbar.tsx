@@ -1,32 +1,32 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useState } from 'react';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
-import { usePathname } from 'next/navigation';
-import { signOut, useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import favican from '@/app/favicon.ico'
-import bikeSvg from '../../../public/images/bike-svg.svg'
-import {UserIcon} from "@heroicons/react/24/outline";
-import Image from 'next/image';
+import Link from "next/link";
+import { useState } from "react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
+import { usePathname } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import favican from "@/app/favicon.ico";
+import bikeSvg from "../../../public/images/bike-svg.svg";
+import { UserIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname()
+  const pathname = usePathname();
   const router = useRouter();
   const { data: session, status } = useSession();
-  
+
   const links = [
     {
-        id: 1,
-        path: '/',
-        name: 'בית'
+      id: 1,
+      path: "/",
+      name: "בית",
     },
     {
-        id: 2,
-        path: '/products',
-        name: 'מוצרים'
+      id: 2,
+      path: "/products",
+      name: "מוצרים",
     },
   ];
 
@@ -54,10 +54,13 @@ const Navbar = () => {
   ];
 
   const handleLogout = () => {
-    document.cookie = '__Secure-next-auth.session-token=; Max-Age=0; path=/';
+    document.cookie = "__Secure-next-auth.session-token=; Max-Age=0; path=/";
     document.cookie = "next-auth.session-token=; Max-Age=0; path=/";
+    fetch("/api/auth/logout", {
+      method: "POST",
+    });
 
-    signOut({ callbackUrl: '/' });
+    signOut({ callbackUrl: "/" });
   };
 
   return (
@@ -123,7 +126,7 @@ const Navbar = () => {
             ) : (
               <button
                 className="text-gray-500 hover:text-gray-700 duration-200"
-                onClick={() => signOut({ callbackUrl: "/login" })}
+                onClick={handleLogout}
               >
                 התנתק
               </button>
@@ -199,7 +202,7 @@ const Navbar = () => {
             ) : (
               <button
                 className="text-gray-500 hover:text-gray-700 duration-200"
-                onClick={() => signOut({ callbackUrl: "/login" })}
+                onClick={handleLogout}
               >
                 התנתק
               </button>
