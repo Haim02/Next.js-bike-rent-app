@@ -77,7 +77,7 @@ const UpdateProductForm = ({
     product.hasHelmet = !product.hasHelmet;
   };
 
-  const handleSubmit = async (formData: FormData) => {
+  const handleSubmit = async (formData: any) => {
     const body = Object.fromEntries(formData);
 
     if (address?.city === undefined) {
@@ -111,8 +111,7 @@ const UpdateProductForm = ({
           "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
-      }).catch((err) => {
-      });
+      }).catch((err) => {});
     });
 
     onCancel();

@@ -61,8 +61,8 @@ export const PATCH = async (req: Request, { params }: { params: Promise<{ id: st
 export const DELETE = async (req: Request) => {
 
   try {
-    const session = await getServerSession(authOptions);
-    if (!session || !session.user?.id) {
+    const session = await getServerSession(authOptions) as Session;
+    if (!session || !session.user.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
     await db.product.delete({

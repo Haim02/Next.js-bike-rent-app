@@ -1,5 +1,4 @@
-// "use client";
-
+import { Metadata } from "next";
 import React, { Suspense } from "react";
 
 export const metadata: Metadata = {
@@ -7,15 +6,13 @@ export const metadata: Metadata = {
   description: "מוצרים להשכרה",
   robots: {
     index: true,
-    follow: true
-  }
+    follow: true,
+  },
 };
 
 const ProfileLayout: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  // const [activeTab, setActiveTab] = useState("profile");
-
   return (
     <main className="flex flex-col w-full md:px-12 mt-24 gap-3">
       <div className="">

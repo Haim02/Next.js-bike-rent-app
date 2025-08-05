@@ -5,11 +5,22 @@ import Button from "@/components/button/Button";
 import { useSession } from "next-auth/react";
 import Loading from "./../loading/Loading";
 
+type Session = {
+  user: {
+    name: string;
+    email: string;
+    image?: undefined;
+    id: string;
+  };
+};
+
 const UserDetailesAndUpdate: React.FC = () => {
   const [editMode, setEditMode] = useState(false);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<any>();
   const [pending, startTransition] = useTransition();
-  const { data: session, status } = useSession();
+  const { data: userSession, status } = useSession();
+  let session: Session | any = userSession;
+
 
   useEffect(() => {
     if (status !== "authenticated") return;
@@ -36,7 +47,7 @@ const UserDetailesAndUpdate: React.FC = () => {
   }, [status, session]);
 
   const handleSubmit = (formData: FormData) => {
-    const body = Object.fromEntries(formData);
+    const body: any = Object.fromEntries(formData);
 
     setEditMode(false);
 

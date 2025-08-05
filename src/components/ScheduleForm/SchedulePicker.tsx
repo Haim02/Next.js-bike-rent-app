@@ -21,7 +21,7 @@ interface Product {
 
 interface WeeklySchedulePickerProps {
   productId: string;
-  product?: Product;
+  product: Product | any;
 }
 
 interface SelectedDateTime {
@@ -37,13 +37,25 @@ interface BookedHours {
   [date: string]: string[];
 }
 
+type Session = {
+  user: {
+    name: string;
+    email: string;
+    image?: undefined;
+    id: string;
+  };
+};
+
+
+
 export default function SchedulePicker({
   productId,
   product,
 }: WeeklySchedulePickerProps) {
-  const { data: session, status } = useSession();
+     const { data: userSession, status } = useSession();
+      let session: Session | any = userSession;
   const [pending, startTransition] = useTransition();
-  const [selectedDateTime, setSelectedDateTime] = useState<SelectedDateTime>({
+  const [selectedDateTime, setSelectedDateTime] = useState<SelectedDateTime | any>({
     date: null,
     hours: [],
   });

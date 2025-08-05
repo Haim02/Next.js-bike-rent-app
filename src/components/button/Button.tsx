@@ -2,10 +2,11 @@ import React from 'react';
 import clsx from 'clsx';
 
 type ButtonProps = {
-  text: string;
+  text: string | any;
   onClick?: () => void;
-  variant?: 'primary' | 'secondary';
+  variant?: "primary" | "secondary";
   className?: string;
+  type?: string
 };
 
 const Button: React.FC<ButtonProps> = ({ text, onClick, variant = 'primary', className }) => {

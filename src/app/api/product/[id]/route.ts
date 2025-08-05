@@ -47,7 +47,7 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
             model,
             hasHelmet,
             batteryWatts,
-          updatedAt: new Date(),
+            updateAt: new Date() as Date,
         },
       });
 

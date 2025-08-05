@@ -3,7 +3,7 @@
 import React, { useState, useTransition } from "react";
 import Button from "@/components/button/Button";
 import * as z from "zod";
-import {PlusIcon} from '@heroicons/react/24/outline';
+import { PlusIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import { deleteImage, getImageUrl } from "@/utils/imageUrl";
 import { useSession } from "next-auth/react";
@@ -13,8 +13,17 @@ import CityAndStreet from "@/components/updateProductForm/CityAndStreet";
 interface PropsData {
   city: string;
   street: string;
-  houseNumber: number
+  houseNumber: number;
 }
+
+type Session = {
+  user: {
+    name: string;
+    email: string;
+    image?: undefined;
+    id: string;
+  };
+};
 
 const ProductSchema = z.object({
   type: z.enum(["SCOOTER", "BICYCLE"]),
@@ -24,17 +33,19 @@ const ProductSchema = z.object({
   pricePerHour: z.coerce.number().min(1, "מחיר לשעה נדרש"),
 });
 
-export type ProductData = z.infer<typeof ProductSchema>;
+export type ProductData = z.infer<typeof ProductSchema | any>;
 
 const UploadItemForm: React.FC = () => {
   const router = useRouter();
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<any>({});
   const [isChecked, setIsChecked] = useState(false);
   const [pending, startTransition] = useTransition();
   const [images, setimages] = useState<string[]>([]);
   const [address, setAddress] = useState<PropsData>();
   const [previewUrls, setPreviewUrls] = useState<string[] | any[]>([]);
-    const { data: session, status } = useSession();
+  const { data: userSession, status } = useSession();
+
+  let session: Session | any = userSession;
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (images.length >= 4) return;
@@ -55,38 +66,37 @@ const UploadItemForm: React.FC = () => {
   };
 
   const handleRemoveImage = (index: number) => {
-    const image = previewUrls[index]
-    deleteImage(image)
+    const image = previewUrls[index];
+    deleteImage(image);
     const updatedImages = [...images];
     const updatedUrls = [...previewUrls];
     updatedImages.splice(index, 1);
     updatedUrls.splice(index, 1);
-    setimages( updatedImages );
+    setimages(updatedImages);
     setPreviewUrls(updatedUrls);
   };
 
   const handleChecboxChange = () => {
-    setIsChecked(!isChecked)
-  }
+    setIsChecked(!isChecked);
+  };
 
   const handleChildProps = (address: PropsData) => {
     setAddress(address);
   };
 
-
   const handleSubmit = async (formDate: ProductData) => {
     const data = Object.fromEntries(formDate);
     const result = ProductSchema.safeParse(data);
 
-    data.hasHelmet = isChecked
-    data.images = images
-    data.city = address.city
-    data.street = address.street
-    data.houseNumber = address.houseNumber
-    data.pricePerDay = parseInt(data.pricePerDay)
-    data.pricePerHour = parseInt(data.pricePerHour)
-    data.batteryWatts = parseInt(data.batteryWatts)
-    data.authorId = session.user.id
+    data.hasHelmet = isChecked;
+    data.images = images;
+    data.city = address?.city;
+    data.street = address?.street;
+    data.houseNumber = address?.houseNumber;
+    data.pricePerDay = parseInt(data.pricePerDay);
+    data.pricePerHour = parseInt(data.pricePerHour);
+    data.batteryWatts = parseInt(data.batteryWatts);
+    data.authorId = session.user.id;
 
     if (result.error) {
       const errorsList = result.error?.flatten().fieldErrors;
@@ -103,15 +113,13 @@ const UploadItemForm: React.FC = () => {
         });
 
         if (res.ok) {
-            router.push("/profile/my-product");
+          router.push("/profile/my-product");
         } else {
-          errors.failed = 'שגיעה בהעלאת המוצר נסה שנית מאוחר יותר'
+          errors.failed = "שגיעה בהעלאת המוצר נסה שנית מאוחר יותר";
         }
-
-      })
-   }
+      });
+    }
   };
-
 
   return (
     <section className="max-w-2xl mx-auto py-10 px-6 mt-24">
@@ -189,7 +197,7 @@ const UploadItemForm: React.FC = () => {
         <div className="flex items-center gap-2">
           <input
             type="checkbox"
-            defaultValue={false}
+            defaultValue={"false"}
             name="hasHelmet"
             onChange={handleChecboxChange}
           />

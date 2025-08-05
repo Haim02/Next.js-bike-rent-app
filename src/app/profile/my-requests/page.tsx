@@ -122,7 +122,7 @@ export default function MyRequestsPage() {
           </tr>
         </thead>
         <tbody>
-          {sorted.map((req) => (
+          {sorted.map((req: any) => (
             <React.Fragment key={req.id}>
               <tr
                 onClick={() => toggleRow(req.id)}

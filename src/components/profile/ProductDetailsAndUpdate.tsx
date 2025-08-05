@@ -12,10 +12,15 @@ import Loading from "@/components/loading/Loading";
 interface Product {
   id: number;
   title: string;
+  model: string;
   description: string;
   pricePerDay: number;
   pricePerHour: number;
+  hasHelmet: boolean
   images: string[];
+  city?: string;
+  street?: string;
+  houseNumber?: number | string;
 }
 
 const ProductDetailsAndUpdate: React.FC = () => {
@@ -59,7 +64,7 @@ const ProductDetailsAndUpdate: React.FC = () => {
           alert("המוצר נמחק בהצלחה");
           router.push("/profile/upload-product");
         } else {
-          errors.failed = "שגיעה בהעלאת המוצר נסה שנית מאוחר יותר";
+          throw new Error('שגיעה בהעלאת המוצר נסה שנית מאוחר יותר');
         }
       });
     }

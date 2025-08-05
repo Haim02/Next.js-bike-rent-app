@@ -1,5 +1,4 @@
 import React from 'react';
-import { Spinner } from '@heroicons/react/24/outline';
 
 interface LoadingProps {
   text?: string;

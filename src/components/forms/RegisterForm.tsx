@@ -25,16 +25,16 @@ const SigupSchema = z
     path: ["confirmPassword"],
   });
 
-export type SigupData = z.infer<typeof SigupSchema>;
+export type SigupData = z.infer<typeof SigupSchema | any>;
 
 const RegisterForm: React.FC = () => {
   const router = useRouter();
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<any>({});
   const [pending, startTransition] = useTransition();
 
-  const handleSubmit = async (formDate: SigupData) => {
-    const { name, email, phone,  password, confirmPassword } =
-    Object.fromEntries(formDate);
+  const handleSubmit = async (formDate: SigupData): Promise<any> => {
+    const { name, email, phone, password, confirmPassword } =
+      Object.fromEntries(formDate);
     const result = SigupSchema.safeParse({
       name,
       email,
@@ -66,7 +66,7 @@ const RegisterForm: React.FC = () => {
           router.push("/login");
         });
       } else {
-        throw new Error('משהו השתבש נסה שוב')
+        throw new Error("משהו השתבש נסה שוב");
       }
     }
   };

@@ -53,7 +53,7 @@ export default function MyProductRequestsPage() {
 
   const handleStatusChange = async (
     id: string,
-    newStatus: "APPROVED" | "REJECTED"
+    newStatus: "APPROVED" | "REJECTED" | "PENDING"
   ) => {
     try {
       startTransition(async () => {

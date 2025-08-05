@@ -25,6 +25,10 @@ interface Product {
   batteryWatts: number;
   ownerId: number;
   images: string[] | any[];
+  city?: string;
+  street?: string;
+  houseNumber?: number | string;
+  authorId: string | any;
 }
 
 const ProductDetails = (productId: any) => {

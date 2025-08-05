@@ -13,6 +13,8 @@ type Product = {
   image: string;
   price: number;
   type: string;
+  images?: [string] | any;
+  pricePerHour?: string | number
 };
 
 type Props = {
