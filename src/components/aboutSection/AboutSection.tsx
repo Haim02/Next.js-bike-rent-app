@@ -19,7 +19,7 @@ const AboutSection = () => {
             חוו את הריגוש של נסיעה חלקה ומודעת לסביבה – השכירו אופניים או קורקינט חשמלי עוד היום!
           </p>
           <Link href="/products">
-            <Button text="לעיון במבחר" />
+            <Button text="עוד" />
           </Link>
         </div>
 

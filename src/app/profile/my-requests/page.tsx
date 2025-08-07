@@ -89,7 +89,7 @@ export default function MyRequestsPage() {
   return (
     <section className="max-w-5xl mx-auto py-10 px-6 mt-24">
       <div className="flex flex-col md:flex-row justify-between mb-6 gap-4 text-right">
-        <h1 className="text-2xl font-bold">בקשות ששלחתי</h1>
+        <h1 className="text-2xl font-bold">בקשות שנשלחו</h1>
         <div className="flex gap-2">
           <select
             value={filterStatus}

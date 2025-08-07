@@ -6,6 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import {CldImage} from 'next-cloudinary'
 import Loading from "../loading/Loading";
+import imageNotFound from '../../../public/images/imageNotFound.jpg'
+import { ConfigOptions } from "cloudinary";
 
 type Product = {
   id: number;
@@ -29,19 +31,18 @@ const ProductList = ({ filter, sort }: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
-  const imageLoader = (config) => {
-            const urlStart = config.src.split
-            return config.src
-          }
+  const imageLoader = (config: ConfigOptions) => {
+    const urlStart = config.src.split;
+    return config.src;
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       startTransition(async () => {
-          const res = await fetch('/api/product',
-            {
-              method: "GET",
-            });
+          const res = await fetch("/api/product", {
+            method: "GET",
+          });
           let all = await res.json();
 
           let filtered = [...all];
@@ -82,7 +83,6 @@ const ProductList = ({ filter, sort }: Props) => {
                 src={product.images[0]}
                 alt={product.title}
                 fill
-                className="object-cover"
                 quality={50}
               />
             </div>

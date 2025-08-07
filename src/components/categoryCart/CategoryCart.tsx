@@ -35,7 +35,7 @@ const CategoryCards = () => {
                 priority
                 src={category.image}
                 alt={category.title}
-                className="w-full h-56 object-center transform transition-transform duration-300 group-hover:scale-110"
+                className="w-full h-65 object-center transform transition-transform duration-300 group-hover:scale-110"
               />
             </div>
             <div className="p-6 text-center">
@@ -43,7 +43,7 @@ const CategoryCards = () => {
                 {category.title}
               </h3>
               <Link href={category.link}>
-                <Button text="לצפייה" />
+                <Button text="עוד" />
               </Link>
             </div>
           </div>

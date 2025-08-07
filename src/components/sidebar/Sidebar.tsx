@@ -42,7 +42,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
       >
         <PaperAirplaneIcon className="w-5 h-5" />
         <Link href="/profile/my-requests">
-          <span>בקשות ששלחתי</span>
+          <span>בקשות שנשלחו</span>
         </Link>
       </button>
 
@@ -56,7 +56,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
       >
         <InboxArrowDownIcon className="w-5 h-5" />
         <Link href="/profile/requests-to-me">
-          <span>בקשות אליי</span>
+          <span>בקשות שהתקבלו</span>
         </Link>
       </button>
 
@@ -84,7 +84,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
       >
         <CubeIcon className="w-5 h-5" />
         <Link href="/profile/upload-product">
-          <span>העלאת מוצר</span>
+          <span>פרסום מוצר</span>
         </Link>
       </button>
     </aside>

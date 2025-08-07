@@ -123,7 +123,7 @@ const UploadItemForm: React.FC = () => {
 
   return (
     <section className="max-w-2xl mx-auto py-10 px-6 mt-24">
-      <h1 className="text-2xl font-bold mb-6 text-right">העלה מוצר חדש</h1>
+      <h1 className="text-2xl font-bold mb-6 text-right">פרסם מוצר חדש</h1>
       <form action={handleSubmit} className="space-y-6 text-right">
         <div>
           <label className="block mb-1 text-sm">סוג</label>
@@ -249,7 +249,7 @@ const UploadItemForm: React.FC = () => {
           </div>
         </div>
         <Button
-          text={pending ? <Loading /> : "העלה מוצר"}
+          text={pending ? <Loading /> : "פרסם מוצר"}
           type="submit"
           className="w-full"
         />
