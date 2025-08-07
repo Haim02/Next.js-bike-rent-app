@@ -38,7 +38,7 @@ const ProductList = ({ filter, sort }: Props) => {
     const fetchData = async () => {
       setLoading(true);
       startTransition(async () => {
-          const res = await fetch('api/product',
+          const res = await fetch('/api/product',
             {
               method: "GET",
             });
