@@ -24,4 +24,4 @@ A modern full-stack web application for renting electric bikes and scooters. Use
    npm install
 
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
