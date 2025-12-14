@@ -38,8 +38,8 @@ export const GET = async (req: Request, { params }: { params: { id: string | any
 
 
 
-export const PATCH = async (req: Request, { params }: { params: Promise<{ id: string | any }> }) => {
-  const { id } = await params;
+export const PATCH = async (req: Request, { params }: { params: { id: string | any } }) => {
+  const { id } = params;
 
   try {
     if (!id) {

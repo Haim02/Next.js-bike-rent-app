@@ -14,7 +14,7 @@ type Session = {
   }
 };
 
-export const GET = async (req: Request, { params }: { params: Promise<{ id: string | any }> }) => {
+export const GET = async (req: Request, { params }: { params: { id: string | any } }) => {
     try {
       const session = await getServerSession(authOptions) as Session;
       if (!session || !session.user.id) {
