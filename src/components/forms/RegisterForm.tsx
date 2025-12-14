@@ -60,8 +60,7 @@ const RegisterForm: React.FC = () => {
           password,
         }),
       });
-      console.log("status ", res.status)
-      console.log("res ", res)
+
       if(!res.ok) {
         errors.server = "בעיה בהרשמה! נסה שוב מאוחר יותר"
         return;
