@@ -6,8 +6,8 @@ import { getServerSession } from "next-auth"
 import { NextResponse } from "next/server"
 
 
-export async function PATCH(req: Request, { params }: { params: Promise<{ id: string | any }> }) {
-  const { id } = await params;
+export async function PATCH(req: Request, { params }: { params: { id: string | any } }) {
+  const { id } = params;
     const { status } = await req.json();
 
     if (!id) {
