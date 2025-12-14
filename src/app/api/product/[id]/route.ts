@@ -2,8 +2,8 @@
 import { db } from "@/lib/db"
 import { NextResponse } from "next/server"
 
-export const GET = async (req: Request,{ params }: { params: { id: string | any } }) => {
-  const { id } = params;
+export const GET = async (req: Request,{ params }: { params: Promise<{ id: string | any }> }) => {
+  const { id } = await params;
 
     if (!id) {
       return NextResponse.json({ error: 'חסר מזהה מוצר' }, { status: 400 });
@@ -23,9 +23,9 @@ export const GET = async (req: Request,{ params }: { params: { id: string | any 
         }
 }
 
-export async function PATCH(req: Request, { params }: { params: { id: string | any } }
+export async function PATCH(req: Request, { params }: { params: Promise<{ id: string | any }> }
   ) {
-    const { id } = params;
+    const { id } = await params;
 
     if (!id) {
       return NextResponse.json({ error: 'חסר מזהה מוצר' }, { status: 400 });
@@ -61,8 +61,8 @@ export async function PATCH(req: Request, { params }: { params: { id: string | a
     }
   }
 
-  export async function DELETE(req: Request, { params }: { params: { id: string | any } }) {
-    const { id } =  params;
+  export async function DELETE(req: Request, { params }: { params: Promise<{ id: string | any }> }) {
+    const { id } = await params;
 
     if (!id) {
       return NextResponse.json({ error: 'חסר מזהה מוצר' }, { status: 400 });
