@@ -60,7 +60,12 @@ const RegisterForm: React.FC = () => {
           password,
         }),
       });
-
+      console.log("status ", res.status)
+      console.log("res ", res)
+      if(!res.ok) {
+        errors.server = "בעיה בהרשמה! נסה שוב מאוחר יותר"
+        return;
+      }
       if (res.ok) {
         startTransition(() => {
           router.push("/login");
@@ -161,6 +166,7 @@ const RegisterForm: React.FC = () => {
         </div>
 
         <Button text={pending ? <Loading /> : "הרשמה"} className="w-full" />
+        {errors.server && <small className="text-red-500 block">{err}</small>}
       </form>
     </section>
   );

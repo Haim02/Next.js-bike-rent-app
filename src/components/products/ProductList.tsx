@@ -43,6 +43,12 @@ const ProductList = ({ filter, sort }: Props) => {
           const res = await fetch("/api/product", {
             method: "GET",
           });
+          if(!res.ok) {
+            console.log('API error: ', res.status)
+            setLoading(false)
+            return
+          }
+
           let all = await res.json();
 
           let filtered = [...all];
