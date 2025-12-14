@@ -2,6 +2,7 @@
 
 import { db } from "@/lib/db"
 import { NextResponse } from "next/server"
+import { NextRequest } from "next/server";
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
@@ -14,9 +15,9 @@ type Session = {
   }
 };
 
-export const GET = async (req: Request, { params }: { params: Promise<{ id: string | any }> }) => {
+export const GET = async (req: NextRequest) => {
     try {
-      const session = await getServerSession(authOptions) as Session;
+      const session = (await getServerSession(authOptions)) as Session;
       if (!session || !session.user.id) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
       }
@@ -35,10 +36,10 @@ export const GET = async (req: Request, { params }: { params: Promise<{ id: stri
 }
 
 
-export const PATCH = async (req: Request, { params }: { params: Promise<{ id: string | any }> }) => {
+export const PATCH = async (req: NextRequest) => {
 
   try {
-    const session = await getServerSession(authOptions) as Session;
+    const session = await (getServerSession(authOptions)) as Session;
     if (!session || !session.user.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
