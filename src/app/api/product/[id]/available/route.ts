@@ -8,11 +8,11 @@ type AvailableHoursResponse = string[];
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string | any } }
+  { params }: { params: Promise<{ id: string | any }> }
 ) {
   const url = new URL(req.url);
   const dateString = url.searchParams.get('date');
-  const { id } = params;
+  const { id } = await params;
 
   if (!id) {
     return NextResponse.json({ message: 'Product ID is required.' }, { status: 400 });
